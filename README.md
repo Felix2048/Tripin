@@ -1,4 +1,4 @@
-# Travel
+# Tripin
 
 ## 项目约定规范
 
