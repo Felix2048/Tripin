@@ -1,15 +1,2 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea/.mvn/
-.idea/compiler.xml
-.idea/encodings.xml
-.idea/inspectionProfiles/
-.idea/libraries/
-.idea/misc.xml
-.idea/modules.xml
-.idea/mvnw
-.idea/mvnw.cmd
-.idea/uiDesigner.xml
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/*.iml
-.idea/target
+.idea/
