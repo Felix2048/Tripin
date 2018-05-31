@@ -10,8 +10,9 @@ package com.tripin.application.enums;
 
 public enum ErrorCode {
 
-    UNKNONW_ERROR(-1, "Unknown Error"),
-    SUCCESS(0, "Success");
+    UNKNONW_ERROR(-1, "Unknown Error"), //  未知错误
+    SUCCESS(0, "Success"),
+    UNAUTHORIZED(401, "Access Deny");
 
     private Integer errorCode;
 
