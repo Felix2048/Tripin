@@ -1,9 +1,8 @@
 package com.tripin.application.enums;
 
 /**
- * Title:  UserStatus
- * Description: 数据库表UserBase的erStatus字段的枚举类型 UserStatus
- *
+ * @Title:  UserStatus
+ * @Description: 数据库表UserBase的userStatus字段的枚举类型 UserStatus
  * @Author: Felix
  * @Date: 2018/5/29 19:06
  * @Version: 1.0
