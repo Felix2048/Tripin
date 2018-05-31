@@ -1,5 +1,6 @@
 package com.tripin.application.utils;
 
+import com.tripin.application.domain.Result;
 import com.tripin.application.enums.ErrorCode;
 
 /**

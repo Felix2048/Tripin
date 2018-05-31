@@ -1,4 +1,4 @@
-package com.tripin.application.utils;
+package com.tripin.application.domain;
 
 import com.tripin.application.enums.ErrorCode;
 

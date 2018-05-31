@@ -2,7 +2,7 @@ package com.tripin.application.handler;
 
 import com.tripin.application.enums.ErrorCode;
 import com.tripin.application.exception.TripinException;
-import com.tripin.application.utils.Result;
+import com.tripin.application.domain.Result;
 import com.tripin.application.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
