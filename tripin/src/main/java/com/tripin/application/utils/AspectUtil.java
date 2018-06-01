@@ -47,8 +47,8 @@ public class AspectUtil {
 
     }
 
-    @AfterReturning(returning = "basejson",pointcut = "log()")
-    public void doAfterReturning(BaseJson basejson) {
-
-    }
+//    @AfterReturning(returning = "basejson",pointcut = "log()")
+//    public void doAfterReturning(BaseJson basejson) {
+//
+//    }
 }

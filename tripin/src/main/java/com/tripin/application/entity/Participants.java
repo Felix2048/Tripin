@@ -1,6 +1,6 @@
 package com.tripin.application.entity;
 
-import com.tripin.application.enums.ParticipantAuthorization;
+import com.tripin.application.enums.ParticipantAuthorizationType;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -21,15 +21,15 @@ public class Participants implements Serializable {
 
     private int participantID;
 
-    private ParticipantAuthorization participantAuthorization;
+    private ParticipantAuthorizationType participantAuthorizationType;
 
     public Participants() {
     }
 
-    public Participants(int planID, int participantID, ParticipantAuthorization participantAuthorization) {
+    public Participants(int planID, int participantID, ParticipantAuthorizationType participantAuthorizationType) {
         this.planID = planID;
         this.participantID = participantID;
-        this.participantAuthorization = participantAuthorization;
+        this.participantAuthorizationType = participantAuthorizationType;
     }
 
     public static long getSerialVersionUID() {
@@ -52,12 +52,12 @@ public class Participants implements Serializable {
         this.participantID = participantID;
     }
 
-    public ParticipantAuthorization getParticipantAuthorization() {
-        return participantAuthorization;
+    public ParticipantAuthorizationType getParticipantAuthorizationType() {
+        return participantAuthorizationType;
     }
 
-    public void setParticipantAuthorization(ParticipantAuthorization participantAuthorization) {
-        this.participantAuthorization = participantAuthorization;
+    public void setParticipantAuthorizationType(ParticipantAuthorizationType participantAuthorizationType) {
+        this.participantAuthorizationType = participantAuthorizationType;
     }
 
     @Override
@@ -67,13 +67,13 @@ public class Participants implements Serializable {
         Participants that = (Participants) o;
         return getPlanID() == that.getPlanID() &&
                 getParticipantID() == that.getParticipantID() &&
-                getParticipantAuthorization() == that.getParticipantAuthorization();
+                getParticipantAuthorizationType() == that.getParticipantAuthorizationType();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getPlanID(), getParticipantID(), getParticipantAuthorization());
+        return Objects.hash(getPlanID(), getParticipantID(), getParticipantAuthorizationType());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Participants implements Serializable {
         return "Participants{" +
                 "planID=" + planID +
                 ", participantID=" + participantID +
-                ", participantAuthorization=" + participantAuthorization +
+                ", participantAuthorizationType=" + participantAuthorizationType +
                 '}';
     }
 }

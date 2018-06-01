@@ -1,22 +1,25 @@
 package com.tripin.application.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tripin.application.enums.UserStatus;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @Title: User
- * @Description: User表的实例
+ * @Title: UserInfo
+ * @Description: UserInfo表的实例
  * @Author: Felix
  * @Date: 5/31/2018 16:31
  * @Version: 1.0
  **/
 
-public class User implements Serializable {
+public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     private int userID;
 
     private String userName;
@@ -25,18 +28,28 @@ public class User implements Serializable {
 
     private String phone;
 
+    @JsonProperty("mail")
     private String email;
 
     private UserStatus userStatus;
 
     private String nickName;
 
-    public User() {
+    public UserInfo() {
 
     }
 
-    public User(int userID, String userName, String password, String phone, String email, UserStatus userStatus, String nickName) {
+    public UserInfo(int userID, String userName, String password, String phone, String email, UserStatus userStatus, String nickName) {
         this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+        this.userStatus = userStatus;
+        this.nickName = nickName;
+    }
+
+    public UserInfo(String userName, String password, String phone, String email, UserStatus userStatus, String nickName) {
         this.userName = userName;
         this.password = password;
         this.phone = phone;
@@ -109,14 +122,14 @@ public class User implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return getUserID() == user.getUserID() &&
-                Objects.equals(getUserName(), user.getUserName()) &&
-                Objects.equals(getPassword(), user.getPassword()) &&
-                Objects.equals(getPhone(), user.getPhone()) &&
-                Objects.equals(getEmail(), user.getEmail()) &&
-                getUserStatus() == user.getUserStatus() &&
-                Objects.equals(getNickName(), user.getNickName());
+        UserInfo userInfo = (UserInfo) o;
+        return getUserID() == userInfo.getUserID() &&
+                Objects.equals(getUserName(), userInfo.getUserName()) &&
+                Objects.equals(getPassword(), userInfo.getPassword()) &&
+                Objects.equals(getPhone(), userInfo.getPhone()) &&
+                Objects.equals(getEmail(), userInfo.getEmail()) &&
+                getUserStatus() == userInfo.getUserStatus() &&
+                Objects.equals(getNickName(), userInfo.getNickName());
     }
 
     @Override
@@ -127,7 +140,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserInfo{" +
                 "userID=" + userID +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +

@@ -28,4 +28,10 @@ public class TripinException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    @Override
+    public String toString() {
+        return "TripinException{" +
+                "errorCode=" + errorCode +
+                '}';
+    }
 }
