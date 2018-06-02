@@ -2,6 +2,9 @@ package com.tripin.application.domain;
 
 import com.tripin.application.enums.ErrorCode;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * @Title: Result
  * @Description: 自定义的Http请求返回的结果
@@ -10,7 +13,9 @@ import com.tripin.application.enums.ErrorCode;
  * @Version: 1.0
  **/
 
-public class Result<T> {
+public class Result<T>  implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /** 错误码. */
     private Integer errorCode;
@@ -31,13 +36,13 @@ public class Result<T> {
     }
 
     public Result(ErrorCode errorCode, T data) {
-        this.errorCode = errorCode.getErrorCode();
+        this.errorCode = errorCode.getCode();
         this.msg = errorCode.getMsg();
         this.data = data;
     }
 
     public Result(ErrorCode errorCode) {
-        this.errorCode = errorCode.getErrorCode();
+        this.errorCode = errorCode.getCode();
         this.msg = errorCode.getMsg();
         this.data = null;
     }
@@ -64,5 +69,30 @@ public class Result<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Result<?> result = (Result<?>) o;
+        return Objects.equals(getErrorCode(), result.getErrorCode()) &&
+                Objects.equals(getMsg(), result.getMsg()) &&
+                Objects.equals(getData(), result.getData());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getErrorCode(), getMsg(), getData());
+    }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "errorCode=" + errorCode +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
     }
 }
