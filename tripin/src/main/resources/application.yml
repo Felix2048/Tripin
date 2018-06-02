@@ -3,8 +3,8 @@ spring:
     active: dev
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/tripin
-    username: root
+    url: jdbc:postgresql://101.132.243.44:5432/tripin?useAffectedRows=true
+    username: postgres
     password: tripin
     hikari:
       maxLifetime: 1765000  #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
