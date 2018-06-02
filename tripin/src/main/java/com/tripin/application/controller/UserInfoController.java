@@ -1,15 +1,14 @@
 package com.tripin.application.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tripin.application.domain.Result;
 import com.tripin.application.domain.Token;
 import com.tripin.application.exception.TripinException;
 import com.tripin.application.service.UserInfoService;
+import com.tripin.application.utils.JsonUtil;
 import com.tripin.application.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Title: UserInfoController
@@ -19,20 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version: 1.0
  **/
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 public class UserInfoController {
 
     private final UserInfoService userInfoService;
 
     @Autowired
-    public UserInfoController(UserInfoService userInfoService) {
+    public UserInfoController(UserInfoService userInfoService, JsonUtil jsonUtil) {
         this.userInfoService = userInfoService;
     }
 
     /**
-     * @Description: 使用userName、phone、email和password进行登陆
-     * @throws TripinException
      * @return 封装了token的result
+     * @throws TripinException, JsonProcessingException
+     * @Description: 使用userName、phone、email和password进行登陆
      */
     @PostMapping("/login")
     public Result userLogin(@RequestParam("account") String account, @RequestParam("password") String password) throws TripinException {
