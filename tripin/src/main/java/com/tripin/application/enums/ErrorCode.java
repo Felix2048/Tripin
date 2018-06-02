@@ -15,8 +15,11 @@ public enum ErrorCode {
     INSERTION_ERROR(100, "Fail to Insert"),
     UPDATE_ERROR(101, "Fail to Update"),
     DELETION_ERROR(102, "Fail to Delete"),
+    QUERY_ERROR(103, "Fail to Query"),
     LOGIN_ERROR(400, "Fail to Login"),
-    UNAUTHORIZED(401, "Access Deny");
+    LOGOIN_BANNED(401, "Account Banned"),
+    LOGOUT_ERROR(402, "Fail to Logout"),
+    UNAUTHORIZED(403, "Access Deny");
 
     private Integer code;
 

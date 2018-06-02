@@ -1,6 +1,7 @@
 package com.tripin.application.mapper;
 
 
+import com.tripin.application.entity.MyUserInfo;
 import com.tripin.application.entity.UserInfo;
 import org.apache.ibatis.annotations.*;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 /**
  * @Title: UserInfoMapper
- * @Description: User表的数据库表资源映射
+ * @Description: UserInfo表和myUserInfo视图的数据库表资源映射
  * @Author: Felix
  * @Date: 6/1/2018 0:19
  * @Version: 1.0
@@ -31,6 +32,14 @@ public interface UserInfoMapper {
      */
     @Select("SELECT * FROM \"userInfo\" WHERE \"userID\" = #{userID}")
     UserInfo getOne(@Param("userID") Integer userID);
+
+    /**
+     * @Description: 按userID来获取视图中的一条数据
+     * @param userID
+     * @return myUserInfo
+     */
+    @Select("SELECT * FROM \"myUserInfo\" WHERE \"userID\" = #{userID}")
+    MyUserInfo getOneFromView(@Param("userID") Integer userID);
 
     /**
      * @Description: 按userName来获取表中的一条数据

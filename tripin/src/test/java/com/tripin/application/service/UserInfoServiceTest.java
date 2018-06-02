@@ -1,5 +1,6 @@
 package com.tripin.application.service;
 
+import com.tripin.application.domain.Token;
 import com.tripin.application.entity.UserInfo;
 import com.tripin.application.enums.ErrorCode;
 import com.tripin.application.enums.UserStatus;
@@ -17,7 +18,7 @@ import java.util.List;
 @SpringBootTest
 public class UserInfoServiceTest {
     @Autowired
-    private UserInfoService userService;
+    private UserInfoService userInfoService;
 
     @Test
     public void userLogin() {
@@ -25,9 +26,8 @@ public class UserInfoServiceTest {
 
     @Test
     public void updatePassword() {
-        System.out.println(userService.userLogin("felix", "miao123"));
-        System.out.println(userService.userLogin("12345678901", "miao123"));
-        System.out.println(userService.userLogin("felix@miao.com", "miao123"));
+        Token token = userInfoService.userLogin("felix", "miao123");
+        userInfoService.updateUserPassword(token, "miao233");
     }
 
 //    @Test

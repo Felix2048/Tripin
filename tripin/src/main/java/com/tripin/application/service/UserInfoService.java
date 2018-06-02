@@ -1,8 +1,12 @@
 package com.tripin.application.service;
 
+import com.tripin.application.annotation.Authorized;
+import com.tripin.application.annotation.Logged;
 import com.tripin.application.domain.Token;
+import com.tripin.application.entity.MyUserInfo;
 import com.tripin.application.entity.UserInfo;
 import com.tripin.application.enums.ErrorCode;
+import com.tripin.application.enums.UserStatus;
 import com.tripin.application.exception.TripinException;
 import com.tripin.application.mapper.UserInfoMapper;
 import com.tripin.application.utils.TokenUtil;
@@ -13,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @Title: UserService
@@ -26,11 +29,17 @@ import java.util.List;
 @Service
 public class UserInfoService {
 
-    private static final Logger logger = LoggerFactory.getLogger("com.service.UserService");
+    private static final Logger logger = LoggerFactory.getLogger("com.aspect.AuthorizationAspect");
+
 
     private final UserInfoMapper userInfoMapper;
 
     private HashMap<String, Token> tokenHashMap;
+
+    public HashMap<String, Token> getTokenHashMap() {
+        // UserInfoService是单例的，故可以通过返回tokenHashMap给AuthorizationAspect进行权限验证，引入Redis后废弃
+        return tokenHashMap;
+    }
 
     private HashMap<Integer, Token> onlineUserHashMap;
 
@@ -43,55 +52,51 @@ public class UserInfoService {
 
     /**
      * @Description: 使用userName、phone、email和password进行登陆
+     * @param account, password
      * @throws TripinException
      * @return TokenUtil
      */
+    @Logged({"account", "password"})
+    @Transactional
     public Token userLogin(String account, String password) {
-        logger.info("userLogin() param:" + account.getClass().getName() + " = " + account
-            + ", " + password.getClass().getName() + " = " + password);
         // 与数据库值进行匹配
-        UserInfo userInfoByUserName = userInfoMapper.getOneByUserName(account);
-        UserInfo userInfoByPhone = userInfoMapper.getOneByPhone(account);
-        UserInfo userInfoByEmail = userInfoMapper.getOneByEmail(account);
+        UserInfo userInfo = null;
         Token token = null;
-        if (null != userInfoByUserName) {
-            // 以userName登陆
-            if(password.equals(userInfoByUserName.getPassword())) {
-                token = TokenUtil.create(userInfoByUserName);
-            }
-            else{
-                throw new TripinException(ErrorCode.LOGIN_ERROR);
-            }
+        userInfo = userInfoMapper.getOneByUserName(account);
+        if (null == userInfo) {
+            // 用户以非userName方式登录
+            userInfo = userInfoMapper.getOneByPhone(account);
         }
-        else if (null != userInfoByPhone) {
-            // 以phone登陆
-            if(password.equals(userInfoByPhone.getPassword())) {
-                token =  TokenUtil.create(userInfoByPhone);
-            }
-            else{
-                throw new TripinException(ErrorCode.LOGIN_ERROR);
-            }
+        if (null == userInfo) {
+            // 用户以非userName或phone方式登录
+            userInfo = userInfoMapper.getOneByEmail(account);
         }
-        else if (null != userInfoByEmail) {
-            // 以email登陆
-            if(password.equals(userInfoByEmail.getPassword())) {
-                token =  TokenUtil.create(userInfoByEmail);
-            }
-            else{
-                throw new TripinException(ErrorCode.LOGIN_ERROR);
-            }
-        }
-        else{
+
+        if (null == userInfo) {
+            // 不存在该用户
             throw new TripinException(ErrorCode.LOGIN_ERROR);
+        }
+        else {
+            if(password.equals(userInfo.getPassword())) {
+                token =  TokenUtil.create(userInfo);
+            }
+            else{
+                throw new TripinException(ErrorCode.LOGIN_ERROR);
+            }
+        }
+        if(userInfo.getUserStatus() == UserStatus.BANNED) {
+            // 禁止登录
+            throw new TripinException(ErrorCode.LOGOIN_BANNED);
         }
 
         // 建立token与用户信息对应关系，暂时使用HashMap存储，拓展可在建立缓存层时使用Redis
         if(onlineUserHashMap.containsKey(token.getUserID())) {
-            // 重复登陆
-            Token onlineUser = onlineUserHashMap.get(token.getUserID());
-            // 删除现有token
-            onlineUserHashMap.remove(onlineUser.getUserID());
-            tokenHashMap.remove(onlineUser.getToken());
+            try {
+                // 调用userLogout方法处理重复登陆,忽略其抛出的异常
+                logger.info("Double login found! Calls userLogout();");
+                this.userLogout(token);
+            } catch (TripinException ignored) {
+            }
         }
         tokenHashMap.put(token.getToken(), token);
         onlineUserHashMap.put(token.getUserID(), token);
@@ -100,89 +105,53 @@ public class UserInfoService {
     }
 
     /**
-     * @Description: 获取User表中全部数据
-     * @return userInfoArray
+     * @Description: 注销拥有当前token中的userID用户的登陆
+     * @param token
+     * @throws TripinException
      */
-    public List<UserInfo> getAll(){
-        logger.info("getAll()");
-        return userInfoMapper.getAll();
-    }
-
-    /**
-     * @Description: 按userID来获取表中的一条数据
-     * @param userID
-     * @return userInfo
-     */
-    public UserInfo getOne(Integer userID){
-        logger.info("getOne() param:" + userID.getClass().getName() + " = " + userID.toString());
-        return userInfoMapper.getOne(userID);
-    }
-
-    /**
-     * @Description: 按userName来获取表中的一条数据
-     * @param userName
-     * @return userInfo
-     */
-    public UserInfo getOneByUserName(String userName) {
-        logger.info("getOneByUserName() param:" + userName.getClass().getName() + " = " + userName);
-        return userInfoMapper.getOneByUserName(userName);
-    }
-
-    /**
-     * @Description: 按phone来获取表中的一条数据
-     * @param phone
-     * @return userInfo
-     */
-    public UserInfo getOneByPhone(String phone) {
-        logger.info("getOneByUserName() param:" + phone.getClass().getName() + " = " + phone);
-        return userInfoMapper.getOneByPhone(phone);
-    }
-
-    /**
-     * @Description: 按email来获取表中的一条数据
-     * @param email
-     * @return userInfo
-     */
-    public UserInfo getOneByEmail(String email) {
-        logger.info("getOneByUserName() param:" + email.getClass().getName() + " = " + email);
-        return userInfoMapper.getOneByEmail(email);
-    }
-
-    /**
-     * @Description: 向表中插入一条数据
-     * @param userInfo
-     */
+    @Logged({"token"})
     @Transactional
-    public int insert(UserInfo userInfo) {
-        logger.info("insert() param:" + userInfo.getClass().getName() + " = " + userInfo.toString());
-        return userInfoMapper.insert(userInfo);
+    public void userLogout(Token token) throws TripinException {
+        if(onlineUserHashMap.containsKey(token.getUserID())) {
+            Token onlineUser = onlineUserHashMap.get(token.getUserID());
+            // 删除现有token
+            onlineUserHashMap.remove(onlineUser.getUserID());
+            tokenHashMap.remove(onlineUser.getToken());
+        }
+        else {
+            throw new TripinException(ErrorCode.LOGOUT_ERROR);
+        }
     }
 
     /**
-     * @Description: 修改表中一条数据的password
-     * @param userID, newPassword
+     * @Description: 获取用户的信息（除密码、帐号状态外）
+     * @param token
      */
+    @Authorized
+    @Logged({"token"})
     @Transactional
-    public int updatePassword(Integer userID, String newPassword) throws TripinException {
-        logger.info("insert() param:" + userID.getClass().getName() + " = " + userID.toString() + ", " +
-                newPassword.getClass().getName() + " = " + newPassword);
-        int affectedRows = userInfoMapper.updatePassword(userID, newPassword);
+    public MyUserInfo getMyUserInfo(Token token) throws TripinException {
+
+        MyUserInfo myUserInfo = userInfoMapper.getOneFromView(token.getUserID());
+        if (null == myUserInfo) {
+            throw new TripinException(ErrorCode.QUERY_ERROR);
+        }
+        return myUserInfo;
+    }
+
+    /**
+     * @Description: 修改password
+     * @param token, newPassword
+     */
+    @Authorized
+    @Logged({"token", "newPassword"})
+    @Transactional
+    public void updateUserPassword(Token token, String newPassword) throws TripinException {
+
+        int affectedRows = userInfoMapper.updatePassword(token.getUserID(), newPassword);
         if (affectedRows != 1) {
             throw new TripinException(ErrorCode.UPDATE_ERROR);
         }
-        return affectedRows;
     }
 
-    /**
-     * @Description: 删除表中的一条数据
-     * @param userID
-     */
-    public int delete(Integer userID) throws TripinException {
-        logger.info("insert() param:" + userID.getClass().getName() + " = " + userID.toString());
-        int affectedRows = userInfoMapper.delete(userID);
-        if (affectedRows != 1) {
-            throw new TripinException(ErrorCode.DELETION_ERROR);
-        }
-        return affectedRows;
-    }
 }
