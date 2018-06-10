@@ -56,7 +56,7 @@ public class UserInfoController {
      */
     @Logged({"tokenString", "userID"})
     @PostMapping("/logout")
-    public Result userLogin(@RequestParam("tokenString") String tokenString, @RequestParam("userID") int userID) {
+    public Result userLogout(@RequestParam("tokenString") String tokenString, @RequestParam("userID") int userID) {
         Token token = new Token(tokenString, userID);
         userInfoService.userLogout(token);
         return ResultUtil.success();
