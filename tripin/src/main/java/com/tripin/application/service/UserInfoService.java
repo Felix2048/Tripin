@@ -157,12 +157,6 @@ public class UserInfoService {
         }
     }
 
-    //    ---Test
-    @Autowired
-    public Result getAllUsers() {
-        Result<List<UserInfo>> allUsers = new Result<>( ErrorCode.SUCCESS );
-        allUsers.setData( userInfoMapper.getAll() );
-        return allUsers;
-    }
+
 
 }
