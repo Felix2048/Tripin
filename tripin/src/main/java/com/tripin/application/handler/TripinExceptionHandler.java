@@ -27,18 +27,12 @@ public class TripinExceptionHandler {
     @ResponseBody
     public Result handle(Exception e) {
         if (e instanceof TripinException) {
-            TripinException girlException = (TripinException) e;
-<<<<<<< HEAD
-            return ResultUtil.error( girlException.getErrorCode() );
+            TripinException tripException = (TripinException) e;
+            return ResultUtil.error( tripException.getErrorCode() );
         } else {
             logger.error( "[SYSTEM ERROR]{}", e );
-            return ResultUtil.error( ErrorCode.UNKNONW_ERROR );
-=======
-            return ResultUtil.error(girlException.getErrorCode());
-        }else {
-            logger.error("[SYSTEM ERROR]{}", e);
-            return ResultUtil.error(ErrorCode.UNKNOWN_ERROR);
->>>>>>> c163fbb7ab8295ac7dc66465a0c04ee19f31f060
+            return ResultUtil.error( ErrorCode.UNKNOWN_ERROR );
+
         }
     }
 

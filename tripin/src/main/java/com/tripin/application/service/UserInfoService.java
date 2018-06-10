@@ -30,7 +30,7 @@ import java.util.List;
 
 @Service
 public class UserInfoService {
-    
+
     private static final Logger logger = LoggerFactory.getLogger("com.tripin.application.service.UserInfoService");
 
 
