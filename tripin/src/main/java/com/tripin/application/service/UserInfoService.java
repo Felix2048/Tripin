@@ -30,13 +30,9 @@ import java.util.List;
 
 @Service
 public class UserInfoService {
-
-<<<<<<< HEAD
-    private static final Logger logger = LoggerFactory.getLogger( "com.aspect.AuthorizationAspect" );
-
-=======
+    
     private static final Logger logger = LoggerFactory.getLogger("com.tripin.application.service.UserInfoService");
->>>>>>> c163fbb7ab8295ac7dc66465a0c04ee19f31f060
+
 
     private final UserInfoMapper userInfoMapper;
 

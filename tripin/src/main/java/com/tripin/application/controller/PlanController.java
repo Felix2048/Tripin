@@ -119,5 +119,11 @@ public class PlanController {
         return ResultUtil.success();
     }
 
+//    ---- 下面是测试函数 ----
+
+    @GetMapping("all")
+    public Result testGetAllUser() {
+        return userInfoService.getAllUsers();
+    }
 
 }

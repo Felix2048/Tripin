@@ -89,11 +89,11 @@ public class UserInfoController {
         return ResultUtil.success();
     }
 
-//    ---- 下面是测试函数 ----
-
-    @GetMapping("all")
-    public Result testGetAllUser() {
-        return userInfoService.getAllUsers();
-    }
+////    ---- 下面是测试函数 ----
+//
+//    @GetMapping("all")
+//    public Result testGetAllUser() {
+//        return userInfoService.getAllUsers();
+//    }
 }
 
