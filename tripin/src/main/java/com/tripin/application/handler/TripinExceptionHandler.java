@@ -27,8 +27,8 @@ public class TripinExceptionHandler {
     @ResponseBody
     public Result handle(Exception e) {
         if (e instanceof TripinException) {
-            TripinException girlException = (TripinException) e;
-            return ResultUtil.error(girlException.getErrorCode());
+            TripinException tripinlException = (TripinException) e;
+            return ResultUtil.error(tripinlException.getErrorCode());
         }else {
             logger.error("[SYSTEM ERROR]{}", e);
             return ResultUtil.error(ErrorCode.UNKNOWN_ERROR);
