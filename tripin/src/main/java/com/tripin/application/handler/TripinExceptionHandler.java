@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class TripinExceptionHandler {
 
-    private final static Logger logger = LoggerFactory.getLogger(TripinExceptionHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger( TripinExceptionHandler.class );
 
-    @ExceptionHandler(TripinException.class)
+    @ExceptionHandler(value = TripinException.class)
     @ResponseBody
     public Result handle(Exception e) {
         if (e instanceof TripinException) {
             TripinException girlException = (TripinException) e;
-            return ResultUtil.error(girlException.getErrorCode());
-        }else {
-            logger.error("[SYSTEM ERROR]{}", e);
-            return ResultUtil.error(ErrorCode.UNKNONW_ERROR);
+            return ResultUtil.error( girlException.getErrorCode() );
+        } else {
+            logger.error( "[SYSTEM ERROR]{}", e );
+            return ResultUtil.error( ErrorCode.UNKNONW_ERROR );
         }
     }
 

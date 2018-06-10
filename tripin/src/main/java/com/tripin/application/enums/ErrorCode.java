@@ -21,6 +21,7 @@ public enum ErrorCode {
     LOGOUT_ERROR(402, "Fail to Logout"),
     UNAUTHORIZED(403, "Access Deny");
 
+
     private Integer code;
 
     private String msg;

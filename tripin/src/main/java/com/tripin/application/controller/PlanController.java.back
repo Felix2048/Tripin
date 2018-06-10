@@ -1,39 +1,70 @@
 package com.tripin.application.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.tripin.application.annotation.Logged;
 import com.tripin.application.domain.Result;
 import com.tripin.application.domain.Token;
 import com.tripin.application.entity.MyUserInfo;
-import com.tripin.application.entity.UserInfo;
+import com.tripin.application.entity.Plan;
+import com.tripin.application.entity.Route;
+import com.tripin.application.enums.PlanType;
 import com.tripin.application.exception.TripinException;
-import com.tripin.application.mapper.UserInfoMapper;
+import com.tripin.application.mapper.PlanMapper;
+import com.tripin.application.service.PlanService;
 import com.tripin.application.service.UserInfoService;
-import com.tripin.application.utils.JsonUtil;
 import com.tripin.application.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
-/**
- * @Title: UserInfoController
- * @Description: 接收请求并处理 UserInfo
- * @Author: Felix
- * @Date: 6/1/2018 13:05
- * @Version: 1.0
- **/
-
 @RestController
-@RequestMapping("/user")
-public class UserInfoController {
+@RequestMapping("/plan")
+public class PlanController {
+    private final PlanService planService;
 
-    private final UserInfoService userInfoService;
+    //测试
+    private final PlanMapper planMapper;
+
 
     @Autowired
-    public UserInfoController(UserInfoService userInfoService, JsonUtil jsonUtil) {
-        this.userInfoService = userInfoService;
+    public PlanController(PlanService planService, PlanMapper planMapper) {
+        this.planService = planService;
+        this.planMapper = planMapper;
     }
+
+    @RequestMapping
+    public Plan getPlan(@RequestParam("id") Integer id) throws TripinException {
+        Plan plan= planService.getPlanById( id );
+        return plan;
+    }
+
+    @RequestMapping("/routers")
+    public List<Route> getRoutes(@RequestParam("id") Integer id) throws TripinException {
+        List routes= planService.getRouterByID( id );
+        //routes 可能不存在
+        return routes;
+    }
+
+    @RequestMapping("/insert")
+    public int insertPlan(@RequestParam("mapID") Integer mapID, @RequestParam("planName") String planName) throws TripinException {
+
+        Plan plan = new Plan();
+        plan.setMapID( mapID );
+        plan.setPlanName( planName );
+        plan.setPlanType( PlanType.PUBLIC );
+        plan.setPlanCreatedDate( new Date( 2010, 5, 16 ) );
+        plan.setPlanModifiedDate( new Date( 2010, 5, 16 ) );
+
+        planMapper.insert( plan);
+        return 0;
+    }
+
+
+
+    //==================
+    UserInfoService userInfoService = null;
 
     /**
      * @return 封装了token的result
@@ -44,8 +75,8 @@ public class UserInfoController {
     @PostMapping("/login")
     public Result userLogin(@RequestParam("account") String account, @RequestParam("password") String password) throws TripinException {
         // 将获取到的account和password给Service进行验证，将token返回给用户
-        Token token = userInfoService.userLogin(account, password);
-        return ResultUtil.success(token);
+        Token token = userInfoService.userLogin( account, password );
+        return ResultUtil.success( token );
     }
 
     /**
@@ -55,9 +86,9 @@ public class UserInfoController {
      */
     @Logged({"tokenString", "userID"})
     @PostMapping("/logout")
-    public Result userLogin(@RequestParam("tokenString") String tokenString, @RequestParam("userID") int userID) {
-        Token token = new Token(tokenString, userID);
-        userInfoService.userLogout(token);
+    public Result userLogout(@RequestParam("tokenString") String tokenString, @RequestParam("userID") int userID) {
+        Token token = new Token( tokenString, userID );
+        userInfoService.userLogout( token );
         return ResultUtil.success();
     }
 
@@ -69,9 +100,9 @@ public class UserInfoController {
     @Logged({"tokenString", "userID"})
     @GetMapping("/info")
     public Result getMyUserInfo(@RequestParam("tokenString") String tokenString, @RequestParam("userID") int userID) {
-        Token token = new Token(tokenString, userID);
-        MyUserInfo myUserInfo = userInfoService.getMyUserInfo(token);
-        return ResultUtil.success(myUserInfo);
+        Token token = new Token( tokenString, userID );
+        MyUserInfo myUserInfo = userInfoService.getMyUserInfo( token );
+        return ResultUtil.success( myUserInfo );
     }
 
     /**
@@ -83,8 +114,8 @@ public class UserInfoController {
     @PostMapping("/set/password")
     public Result updateUserPassword(@RequestParam("tokenString") String tokenString, @RequestParam("userID") int userID,
                                      @RequestParam("newPassword") String newPassword) {
-        Token token = new Token(tokenString, userID);
-        userInfoService.updateUserPassword(token, newPassword);
+        Token token = new Token( tokenString, userID );
+        userInfoService.updateUserPassword( token, newPassword );
         return ResultUtil.success();
     }
 
@@ -94,5 +125,5 @@ public class UserInfoController {
     public Result testGetAllUser() {
         return userInfoService.getAllUsers();
     }
-}
 
+}

@@ -26,9 +26,10 @@ public class UserInfoServiceTest {
 
     @Test
     public void updatePassword() {
-        Token token = userInfoService.userLogin("felix", "miao123");
-        userInfoService.updateUserPassword(token, "miao233");
+        Token token = userInfoService.userLogin("zjd", "1314");
+        userInfoService.updateUserPassword(token, "5201314");
     }
+
 
 //    @Test
 //    public void getAll() {

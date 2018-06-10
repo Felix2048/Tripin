@@ -25,6 +25,13 @@
 	</properties>
 
 	<dependencies>
+        <!--热更新-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Spring Boot Mybatis 依赖 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -36,6 +43,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--包含 spring-aop 和 AspectJ 来支持面向切面编程（AOP）。-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
@@ -60,11 +68,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+        <!-- postgresql 连接驱动依赖 -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+        <!--包含常用的测试所需的依赖，如 JUnit、Hamcrest、Mockito 和 spring-test 等。-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
