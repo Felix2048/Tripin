@@ -21,7 +21,7 @@ import java.util.Arrays;
 @Component
 public class LoggerAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger("com.aspect.LoggerAspect");
+    private static final Logger logger = LoggerFactory.getLogger("com.tripin.application.aspect.LoggerAspect");
 
     @Pointcut("within(com.tripin.application.service..*))")
     public void servicePointcut() {
@@ -37,7 +37,7 @@ public class LoggerAspect {
         String  parameterValues = Arrays.toString(joinPoint.getArgs());// 获取目标方法体参数
         String parameterNames = Arrays.toString(logged.value());
         logger.info("==== Before Execute ====");
-        logger.info("MethodSignature: " + signature);
+        logger.info("Method Signature: " + signature);
         logger.info("Parameter names and value(s): " + parameterNames + " " + parameterValues);
         logger.info("========================");
         logger.info("");
@@ -49,7 +49,7 @@ public class LoggerAspect {
         String  parameterValues = Arrays.toString(joinPoint.getArgs());// 获取目标方法体参数
         String parameterNames = Arrays.toString(logged.value());
         logger.info("==== After  Execute ====");
-        logger.info("MethodSignature: " + signature);
+        logger.info("Method Signature: " + signature);
     }
 
     @AfterReturning(pointcut = "(servicePointcut() || controllerPointcut()) && @annotation(logged)", returning = "returnValue")
@@ -63,7 +63,8 @@ public class LoggerAspect {
 
     @AfterThrowing(pointcut = "(servicePointcut() || controllerPointcut()) && @annotation(logged)", throwing = "exception")
     public void logAfterThrowing(JoinPoint joinPoint, Logged logged, RuntimeException exception) {
-        logger.info("Exception: " + Arrays.toString(exception.getStackTrace()));
+        logger.error("Exception Message: " + exception.getClass().getName() + ": " + exception.getMessage());
+        logger.error("Exception Stack Trace: " + Arrays.toString(exception.getStackTrace()));
         logger.info("==== Execute Failed ====");
         logger.info("");
     }

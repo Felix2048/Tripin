@@ -29,8 +29,7 @@ import java.util.HashMap;
 @Service
 public class UserInfoService {
 
-    private static final Logger logger = LoggerFactory.getLogger("com.aspect.AuthorizationAspect");
-
+    private static final Logger logger = LoggerFactory.getLogger("com.tripin.application.service.UserInfoService");
 
     private final UserInfoMapper userInfoMapper;
 

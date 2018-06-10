@@ -19,7 +19,7 @@ import java.util.HashMap;
  * @Title: AuthorizationAspect
  * @Description:
  *  登陆验证功能，拦截需要权限的请求
- *  凡是带有 @ValidatePermission 以及@ResponseBody注解 控制器 都要进行 功能权限检查
+ *  凡是带有 @Authorized 都要进行功能权限检查
  *  若无权限，则抛出AccessDeniedException 异常，该异常将请求转发至一个控制器，然后将异常结果返回
  *
  * @Author: Felix
@@ -31,7 +31,7 @@ import java.util.HashMap;
 @Component
 public class AuthorizationAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger("com.aspect.AuthorizationAspect");
+    private static final Logger logger = LoggerFactory.getLogger("com.tripin.application.aspect.AuthorizationAspect");
 
     private final UserInfoService userInfoService;
 

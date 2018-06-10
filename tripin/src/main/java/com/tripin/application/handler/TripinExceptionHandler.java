@@ -31,7 +31,7 @@ public class TripinExceptionHandler {
             return ResultUtil.error(girlException.getErrorCode());
         }else {
             logger.error("[SYSTEM ERROR]{}", e);
-            return ResultUtil.error(ErrorCode.UNKNONW_ERROR);
+            return ResultUtil.error(ErrorCode.UNKNOWN_ERROR);
         }
     }
 
