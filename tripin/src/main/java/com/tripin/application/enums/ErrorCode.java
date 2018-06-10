@@ -10,7 +10,7 @@ package com.tripin.application.enums;
 
 public enum ErrorCode {
 
-    UNKNONW_ERROR(-1, "Unknown Error"), //  未知错误
+    UNKNOWN_ERROR(-1, "Unknown Error"), //  未知错误
     SUCCESS(0, "Success"),
     INSERTION_ERROR(100, "Fail to Insert"),
     UPDATE_ERROR(101, "Fail to Update"),

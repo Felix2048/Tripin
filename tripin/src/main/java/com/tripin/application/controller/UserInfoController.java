@@ -28,10 +28,11 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserInfoController {
 
+
     private final UserInfoService userInfoService;
 
     @Autowired
-    public UserInfoController(UserInfoService userInfoService, JsonUtil jsonUtil) {
+    public UserInfoController(UserInfoService userInfoService) {
         this.userInfoService = userInfoService;
     }
 
