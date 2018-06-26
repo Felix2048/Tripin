@@ -1,14 +1,9 @@
 package com.tripin.application.service;
 
-import com.tripin.application.entity.Participants;
-import com.tripin.application.entity.Pin;
-import com.tripin.application.entity.Plan;
-import com.tripin.application.entity.Plat;
-import com.tripin.application.mapper.ParticipantMapper;
-import com.tripin.application.mapper.PinMapper;
-import com.tripin.application.mapper.PlanMapper;
-import com.tripin.application.mapper.PlatMapper;
+import com.tripin.application.entity.*;
+import com.tripin.application.mapper.*;
 import com.tripin.application.utils.BaseJson;
+import com.tripin.application.utils.TSPUtil;
 import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Transformer;
 import org.slf4j.Logger;
@@ -36,6 +31,9 @@ public class PlanPinService extends BaseService {
 
     @Autowired
     private PinMapper pinMapper;
+
+    @Autowired
+    private RouteMapper routeMapper;
 
 
     /**
@@ -179,11 +177,26 @@ public class PlanPinService extends BaseService {
         if (getUserMsg(planId).getErrorCode().equals("1001"))
             return baseJson;
 
-        Pin pin = new Pin();
-        pin.setPlanID(planId);
-
-        List<Pin> pins = pinMapper.getByPlanId(pin);
+        List<Pin> pins = pinMapper.getByPlanId(planId);
         return baseJson.setObject(pins).setErrorCode("0000");
+    }
+
+    /**
+     * 根据计划ID找出一个最佳的pin的顺序，即路径规划
+     *
+     * @param planId
+     * @return orderedPinList 的json
+     */
+    public BaseJson getPlanedPinOrder(Integer planId) {
+
+        BaseJson baseJson = new BaseJson();
+        if (getUserMsg(planId).getErrorCode().equals("1001"))
+            return baseJson;
+
+        List<Route> routeList = routeMapper.getRoutesByPlanId(planId);
+        List<Pin> pinList = pinMapper.getByPlanId(planId);
+        List<Pin> orderedPins = TSPUtil.getOrderedPins(pinList, routeList);
+        return baseJson.setObject(orderedPins).setErrorCode("0000");
     }
 
 }

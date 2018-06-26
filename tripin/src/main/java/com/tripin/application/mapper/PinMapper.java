@@ -23,5 +23,5 @@ public interface PinMapper {
     int updateBypinId(Pin pin);
 
     @Select("select * from pin where \"planID\"=#{planID} and \"isDelete\"=false")
-    List<Pin> getByPlanId(Pin pin);
+    List<Pin> getByPlanId(Integer planID);
 }
