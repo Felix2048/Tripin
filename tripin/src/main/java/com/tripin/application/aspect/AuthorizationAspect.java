@@ -1,19 +1,9 @@
 package com.tripin.application.aspect;
 
-import com.tripin.application.domain.Token;
-import com.tripin.application.enums.ErrorCode;
-import com.tripin.application.exception.TripinException;
-import com.tripin.application.service.UserInfoService;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 
 /**
  * @Title: AuthorizationAspect
@@ -33,38 +23,38 @@ public class AuthorizationAspect {
 
     private static final Logger logger = LoggerFactory.getLogger("com.tripin.application.aspect.AuthorizationAspect");
 
-    private final UserInfoService userInfoService;
+//    private final UserInfoService userInfoService;
+//
+//    @Autowired
+//    public AuthorizationAspect(UserInfoService userInfoService) {
+//        this.userInfoService = userInfoService;
+//    }
 
-    @Autowired
-    public AuthorizationAspect(UserInfoService userInfoService) {
-        this.userInfoService = userInfoService;
-    }
-
-    @Pointcut("within(com.tripin.application.service..*))")
-    public void pointcut() {
-    }
-
-    @Before("pointcut() && @annotation(com.tripin.application.annotation.Authorized)")
-    public void authorize(JoinPoint joinPoint) {
-        Token token = null;
-        Object[] objects = joinPoint.getArgs();
-        for (Object object : objects) {
-            if (object instanceof Token) {
-                token = (Token) object;
-                break;
-            }
-        }
-        HashMap tokenHashMap = userInfoService.getTokenHashMap();
-
-        // 验证Token
-        if(null == token || !tokenHashMap.containsKey(token.getToken()) || !token.equals(tokenHashMap.get(token.getToken()))) {
-            logger.info("Failed to Authorize.");
-            logger.info("");
-            throw new TripinException(ErrorCode.UNAUTHORIZED);
-        }
-        else {
-            logger.info("Successfully Authorize.");
-            logger.info("");
-        }
-    }
+//    @Pointcut("within(com.tripin.application.service..*))")
+//    public void pointcut() {
+//    }
+//
+//    @Before("pointcut() && @annotation(com.tripin.application.annotation.Authorized)")
+//    public void authorize(JoinPoint joinPoint) {
+//        Token token = null;
+//        Object[] objects = joinPoint.getArgs();
+//        for (Object object : objects) {
+//            if (object instanceof Token) {
+//                token = (Token) object;
+//                break;
+//            }
+//        }
+//        HashMap tokenHashMap = userInfoService.getTokenHashMap();
+//
+//        // 验证Token
+//        if(null == token || !tokenHashMap.containsKey(token.getToken()) || !token.equals(tokenHashMap.get(token.getToken()))) {
+//            logger.info("Failed to Authorize.");
+//            logger.info("");
+//            throw new TripinException(ErrorCode.UNAUTHORIZED);
+//        }
+//        else {
+//            logger.info("Successfully Authorize.");
+//            logger.info("");
+//        }
+//    }
 }

@@ -25,6 +25,16 @@ public class Plat  implements Serializable {
 
     private int mapZoom;
 
+    private boolean isDelete = false;
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public Plat() {
     }
 

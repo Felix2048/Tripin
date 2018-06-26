@@ -7,7 +7,7 @@ import sun.misc.BASE64Encoder;
 import java.io.*;
 import java.util.Date;
 
-public class AvatarUtil {
+public class HeadpUtil {
 
     /**
      * 将参数file中文件存入filePath文件下返回jsp中引用路径
@@ -15,14 +15,14 @@ public class AvatarUtil {
      * @param file springMVC自带文件传输类，通过transferTo方法存入文件中
      * @return 返回一个能够在jsp页面中正常使用的路径写法
      */
-    public static String insertAvatar(MultipartFile file, String filePath) {
+    public static String insertHeadp(MultipartFile file, String filePath) {
         String fileStr = "";
         if (!file.isEmpty()) {
             try {
                 String[] filetype = file.getContentType().split("/");
                 String fileName = DateUtil.continueDateFormat(new Date()) + "." + filetype[1];
                 File targetFile = new File(filePath, fileName);
-                fileStr = "/avatar/" + fileName;
+                fileStr = "/headp/" + fileName;
                 file.transferTo(targetFile);
             } catch (Exception e) {
                 e.printStackTrace();

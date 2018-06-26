@@ -1,6 +1,5 @@
 package com.tripin.application.mapper;
 
-
 import com.tripin.application.entity.MyUserInfo;
 import com.tripin.application.entity.UserInfo;
 import org.apache.ibatis.annotations.*;
@@ -22,7 +21,7 @@ public interface UserInfoMapper {
      * @Description: 获取表中全部数据
      * @return userinfoArray
      */
-    @Select("SELECT * FROM \"userInfo\"")
+    @Select("SELECT * FROM \"userInfo\" where \"isDelete\"=false")
     List<UserInfo> getAll();
 
     /**
@@ -30,7 +29,7 @@ public interface UserInfoMapper {
      * @param userID
      * @return userInfo
      */
-    @Select("SELECT * FROM \"userInfo\" WHERE \"userID\" = #{userID}")
+    @Select("SELECT * FROM \"userInfo\" WHERE \"userID\" = #{userID} and \"isDelete\"=false")
     UserInfo getOne(@Param("userID") Integer userID);
 
     /**
@@ -38,7 +37,7 @@ public interface UserInfoMapper {
      * @param userID
      * @return myUserInfo
      */
-    @Select("SELECT * FROM \"myUserInfo\" WHERE \"userID\" = #{userID}")
+    @Select("SELECT * FROM \"myUserInfo\" WHERE \"userID\" = #{userID} and \"isDelete\"=false")
     MyUserInfo getOneFromView(@Param("userID") Integer userID);
 
     /**
@@ -46,7 +45,7 @@ public interface UserInfoMapper {
      * @param userName
      * @return userInfo
      */
-    @Select("SELECT * FROM \"userInfo\" WHERE \"userName\" = #{userName}")
+    @Select("SELECT * FROM \"userInfo\" WHERE \"userName\" = #{userName} and \"isDelete\"=false")
     UserInfo getOneByUserName(@Param("userName") String userName);
 
     /**
@@ -54,7 +53,7 @@ public interface UserInfoMapper {
      * @param phone
      * @return userInfo
      */
-    @Select("SELECT * FROM \"userInfo\" WHERE phone = #{phone}")
+    @Select("SELECT * FROM \"userInfo\" WHERE phone = #{phone} and \"isDelete\"=false")
     UserInfo getOneByPhone(@Param("phone") String phone);
 
     /**
@@ -62,14 +61,14 @@ public interface UserInfoMapper {
      * @param email
      * @return userInfo
      */
-    @Select("SELECT * FROM \"userInfo\" WHERE email = #{email}")
+    @Select("SELECT * FROM \"userInfo\" WHERE email = #{email} and \"isDelete\"=false")
     UserInfo getOneByEmail(@Param("email") String email);
 
     /**
      * @Description: 向表中插入一条数据
      * @param userInfo
      */
-    @Insert({"INSERT INTO \"userInfo\" (\"userName\", password, phone, email, \"userStatus\", \"nickName\") VALUES (#{userName}, #{password}, #{phone}, #{email}, CAST (#{userStatus} AS \"enum_userStatus\"), #{nickName})"})
+    @Insert({"INSERT INTO \"userInfo\" (\"userName\", password, phone, email, \"userStatus\") VALUES (#{userName}, #{password}, #{phone}, #{email}, CAST (#{userStatus} AS \"enum_userStatus\"))"})
     int insert(UserInfo userInfo);
 
     /**
@@ -83,6 +82,14 @@ public interface UserInfoMapper {
      * @Description: 删除表中的一条数据
      * @param userID
      */
-    @Delete("DELETE FROM \"userInfo\" WHERE \"userID\" =#{userID}")
-    int delete(@Param("userID")Integer userID);
+    @Delete("update \"userInfo\" set \"isDelete\"=true WHERE \"userID\" =#{userID}")
+    int delete(@Param("userID") Integer userID);
+
+    UserInfo getOneByUserNameAndPassword(String userName, String oldPassword);
+
+    UserInfo getOneByPhoneAndPassword(String account, String password);
+
+    UserInfo getOneByUserIDAndPassword(int userID, String oldPassword);
+
+    int updateEmailByUserId(int userId, String email);
 }

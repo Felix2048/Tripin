@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @Title: UserInfo
- * @Description: UserInfo表的实例
- * @Author: Felix
- * @Date: 5/31/2018 16:31
- * @Version: 1.0
- **/
+* @Title: UserInfo
+* @Description: UserInfo表的实例
+* @Author: Felix
+* @Date: 5/31/2018 16:31
+* @Version: 1.0
+**/
 
 public class UserInfo implements Serializable {
 
@@ -24,6 +24,7 @@ public class UserInfo implements Serializable {
 
     private String userName;
 
+    @JsonIgnore
     private String password;
 
     private String phone;
@@ -33,10 +34,17 @@ public class UserInfo implements Serializable {
 
     private UserStatus userStatus;
 
-    private String nickName;
+    private boolean isDelete = false;
+
+    public boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
 
     public UserInfo() {
-
     }
 
     public UserInfo(int userID, String userName, String password, String phone, String email, UserStatus userStatus, String nickName) {
@@ -46,7 +54,6 @@ public class UserInfo implements Serializable {
         this.phone = phone;
         this.email = email;
         this.userStatus = userStatus;
-        this.nickName = nickName;
     }
 
     public UserInfo(String userName, String password, String phone, String email, UserStatus userStatus, String nickName) {
@@ -55,7 +62,6 @@ public class UserInfo implements Serializable {
         this.phone = phone;
         this.email = email;
         this.userStatus = userStatus;
-        this.nickName = nickName;
     }
 
     public static long getSerialVersionUID() {
@@ -110,14 +116,6 @@ public class UserInfo implements Serializable {
         this.userStatus = userStatus;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,14 +126,13 @@ public class UserInfo implements Serializable {
                 Objects.equals(getPassword(), userInfo.getPassword()) &&
                 Objects.equals(getPhone(), userInfo.getPhone()) &&
                 Objects.equals(getEmail(), userInfo.getEmail()) &&
-                getUserStatus() == userInfo.getUserStatus() &&
-                Objects.equals(getNickName(), userInfo.getNickName());
+                getUserStatus() == userInfo.getUserStatus();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getUserID(), getUserName(), getPassword(), getPhone(), getEmail(), getUserStatus(), getNickName());
+        return Objects.hash(getUserID(), getUserName(), getPassword(), getPhone(), getEmail(), getUserStatus());
     }
 
     @Override
@@ -147,7 +144,6 @@ public class UserInfo implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", userStatus=" + userStatus +
-                ", nickName='" + nickName + '\'' +
                 '}';
     }
 }

@@ -23,7 +23,26 @@ public class Participants implements Serializable {
 
     private ParticipantAuthorizationType participantAuthorizationType;
 
+    private boolean isDelete = false;
+
+    public boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public Participants() {
+    }
+
+    public Participants(int planID){
+        this.planID=planID;
+    }
+
+    public Participants(int planID, int participantID){
+        this.planID=planID;
+        this.participantID=participantID;
     }
 
     public Participants(int planID, int participantID, ParticipantAuthorizationType participantAuthorizationType) {
@@ -60,6 +79,14 @@ public class Participants implements Serializable {
         this.participantAuthorizationType = participantAuthorizationType;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,13 +94,14 @@ public class Participants implements Serializable {
         Participants that = (Participants) o;
         return getPlanID() == that.getPlanID() &&
                 getParticipantID() == that.getParticipantID() &&
+                isDelete() == that.isDelete() &&
                 getParticipantAuthorizationType() == that.getParticipantAuthorizationType();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getPlanID(), getParticipantID(), getParticipantAuthorizationType());
+        return Objects.hash(getPlanID(), getParticipantID(), getParticipantAuthorizationType(), isDelete());
     }
 
     @Override
@@ -82,6 +110,7 @@ public class Participants implements Serializable {
                 "planID=" + planID +
                 ", participantID=" + participantID +
                 ", participantAuthorizationType=" + participantAuthorizationType +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }

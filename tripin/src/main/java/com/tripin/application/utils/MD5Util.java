@@ -1,13 +1,5 @@
 package com.tripin.application.utils;
 
-/**
- * @Title: MD5Util
- * @Description: MD5加密工具类
- * @Author: Felix
- * @Date: 6/1/2018 13:15
- * @Version: 1.0
- **/
-
 import java.security.MessageDigest;
 
 public class MD5Util {
