@@ -29,6 +29,8 @@ public class Route implements Serializable {
 
     private int routeTime;
 
+    private double routeDistance;
+
     private boolean routeIsChosen;
 
     private boolean isDelete = false;
@@ -48,43 +50,24 @@ public class Route implements Serializable {
         this.planID=planID;
     }
 
-    public Route(int routeID, int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen, boolean isDelete) {
+    public Route(int planID, int origin, int destination, Transportation routeTransportation, int routeTime, double routeDistance, boolean routeIsChosen) {
+        this.planID = planID;
+        this.origin = origin;
+        this.destination = destination;
+        this.routeTransportation = routeTransportation;
+        this.routeTime = routeTime;
+        this.routeDistance = routeDistance;
+        this.routeIsChosen = routeIsChosen;
+    }
+
+    public Route(int routeID, int planID, int origin, int destination, Transportation routeTransportation, int routeTime, double routeDistance, boolean routeIsChosen) {
         this.routeID = routeID;
         this.planID = planID;
         this.origin = origin;
         this.destination = destination;
         this.routeTransportation = routeTransportation;
         this.routeTime = routeTime;
-        this.routeIsChosen = routeIsChosen;
-        this.isDelete = isDelete;
-    }
-
-    public Route(int routeID, int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen) {
-        this.routeID = routeID;
-        this.planID = planID;
-        this.origin = origin;
-        this.destination = destination;
-        this.routeTransportation = routeTransportation;
-        this.routeTime = routeTime;
-        this.routeIsChosen = routeIsChosen;
-    }
-
-    public Route(int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen, boolean isDelete) {
-        this.planID = planID;
-        this.origin = origin;
-        this.destination = destination;
-        this.routeTransportation = routeTransportation;
-        this.routeTime = routeTime;
-        this.routeIsChosen = routeIsChosen;
-        this.isDelete = isDelete;
-    }
-
-    public Route(int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen) {
-        this.planID = planID;
-        this.origin = origin;
-        this.destination = destination;
-        this.routeTransportation = routeTransportation;
-        this.routeTime = routeTime;
+        this.routeDistance = routeDistance;
         this.routeIsChosen = routeIsChosen;
     }
 
@@ -140,6 +123,14 @@ public class Route implements Serializable {
         this.routeTime = routeTime;
     }
 
+    public double getRouteDistance() {
+        return routeDistance;
+    }
+
+    public void setRouteDistance(double routeDistance) {
+        this.routeDistance = routeDistance;
+    }
+
     public boolean isRouteIsChosen() {
         return routeIsChosen;
     }
@@ -161,20 +152,21 @@ public class Route implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Route route = (Route) o;
-        return getRouteID() == route.getRouteID() &&
-                getPlanID() == route.getPlanID() &&
-                getOrigin() == route.getOrigin() &&
-                getDestination() == route.getDestination() &&
-                getRouteTime() == route.getRouteTime() &&
-                isRouteIsChosen() == route.isRouteIsChosen() &&
-                isDelete() == route.isDelete() &&
-                getRouteTransportation() == route.getRouteTransportation();
+        return routeID == route.routeID &&
+                planID == route.planID &&
+                origin == route.origin &&
+                destination == route.destination &&
+                routeTime == route.routeTime &&
+                Double.compare(route.routeDistance, routeDistance) == 0 &&
+                routeIsChosen == route.routeIsChosen &&
+                isDelete == route.isDelete &&
+                routeTransportation == route.routeTransportation;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getRouteID(), getPlanID(), getOrigin(), getDestination(), getRouteTransportation(), getRouteTime(), isRouteIsChosen(), isDelete());
+        return Objects.hash(routeID, planID, origin, destination, routeTransportation, routeTime, routeDistance, routeIsChosen, isDelete);
     }
 
     @Override
@@ -186,6 +178,7 @@ public class Route implements Serializable {
                 ", destination=" + destination +
                 ", routeTransportation=" + routeTransportation +
                 ", routeTime=" + routeTime +
+                ", routeDistance=" + routeDistance +
                 ", routeIsChosen=" + routeIsChosen +
                 ", isDelete=" + isDelete +
                 '}';

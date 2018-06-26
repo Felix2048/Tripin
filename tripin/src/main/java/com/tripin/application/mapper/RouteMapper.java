@@ -14,7 +14,7 @@ public interface RouteMapper {
     Route getRouteByOriginAndDestination(Route route);
 
     @Select("select * from route where \"planID\"=#{planID} and \"isDelete\"=false")
-    List<Route> getRoutesByPlanId(Route route);
+    List<Route> getRoutesByPlanId(Integer planID);
 
     @Insert("insert into route(\"planID\",\"origin\",\"destination\",\"routeTransportation\",\"routeTime\",\"routeIsChosen\",\"isDelete\") values(#{planID},#{origin},#{destination},CAST(#{routeTransportation} as \"enum_transportation\"),#{routeTime},#{routeIsChosen},#{isDelete})")
     int insert(Route route);

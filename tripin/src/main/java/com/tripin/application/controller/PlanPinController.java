@@ -65,4 +65,8 @@ public class PlanPinController {
         return planPinService.updatePinByPlanId( pinId, pin );
     }
 
+    @GetMapping("/planedOrderedPin")
+    public BaseJson getPlanedPinOrder(@RequestParam("pinId")Integer pinId) {
+        return planPinService.getPlanedPinOrder(pinId);
+    }
 }
