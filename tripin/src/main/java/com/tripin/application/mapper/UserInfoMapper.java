@@ -85,11 +85,15 @@ public interface UserInfoMapper {
     @Delete("update \"userInfo\" set \"isDelete\"=true WHERE \"userID\" =#{userID}")
     int delete(@Param("userID") Integer userID);
 
-    UserInfo getOneByUserNameAndPassword(String userName, String oldPassword);
+    @Select("select * from \"userInfo\" where \"userName\"=#{userName} and \"password\"=#{password}")
+    UserInfo getOneByUserNameAndPassword(@Param("userName") String userName, @Param("password") String password);
 
-    UserInfo getOneByPhoneAndPassword(String account, String password);
+    @Select("select * from \"userInfo\" where \"phone\"=#{phone} and \"password\"=#{password}")
+    UserInfo getOneByPhoneAndPassword(@Param("phone") String account, @Param("password") String password);
 
-    UserInfo getOneByUserIDAndPassword(int userID, String oldPassword);
+    @Select("select * from \"userInfo\" where \"userID\"=#{userID} and \"password\"=#{password}")
+    UserInfo getOneByUserIDAndPassword(@Param("userID")Integer userID, @Param("password") String oldPassword);
 
-    int updateEmailByUserId(int userId, String email);
+    @Update("update \"userInfo\" set email=#{email} where \"userID\"=#{userId}")
+    int updateEmailByUserId(@Param("userId") int userId,@Param("email") String email);
 }

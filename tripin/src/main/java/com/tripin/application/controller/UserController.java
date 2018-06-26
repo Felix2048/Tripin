@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2018/4/16 上午10:54
  * @Version: 1.0
  **/
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -25,6 +26,7 @@ public class UserController {
         BaseJson baseJson =  userService.getUserMsg( id );
         return baseJson;
     }
+
     //注册用户
     @Logged({"userName", "password", "phone"})
     @PostMapping("/register")
@@ -53,7 +55,7 @@ public class UserController {
         return userService.updateUserPassword( userID, oldPassword, newPassword );
     }
     //更新密码
-    @PostMapping("/updata/email")
+    @PostMapping("/update/email")
     public BaseJson updateUserPassword(@RequestParam("id") int userId, @RequestParam("email") String email) {
         return userService.setUserEmail( userId, email );
     }
