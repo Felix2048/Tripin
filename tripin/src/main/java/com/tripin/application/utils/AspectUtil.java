@@ -10,15 +10,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Title:  AspectUtil
- * Description: 面向切面AOP操作
- *
- * @Author: quanningzhen
- * @Date: 2018/4/16 上午11:51
- * @Version: 1.0
- **/
-
 @Aspect
 @Component
 public class AspectUtil {

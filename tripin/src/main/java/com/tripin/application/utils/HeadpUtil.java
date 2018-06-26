@@ -7,14 +7,6 @@ import sun.misc.BASE64Encoder;
 import java.io.*;
 import java.util.Date;
 
-/**
- * Title:  HeadpUtil
- * Description: 头像处理工具
- *
- * @date: 2017/9/28 下午8:47
- * @author: quinn_norris
- * @version: 1.0
- */
 public class HeadpUtil {
 
     /**

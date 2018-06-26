@@ -8,14 +8,6 @@ import java.io.*;
 import java.util.Date;
 import java.util.Properties;
 
-/**
- * Title: EmailSend
- * Description: 向用户发送邮件以验证或其他操作 邮箱工具
- *
- * @date: 2017/10/2 下午1:54
- * @author: quinn_norris
- * @version: 1.0
- */
 public class EmailSend {
 
     /**

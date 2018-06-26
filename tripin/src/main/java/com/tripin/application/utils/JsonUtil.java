@@ -9,14 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-/**
- * @Title: JsonUtil
- * @Description: JSON操作的Util，实现进行JSON解析和序列化
- * @Author: Felix
- * @Date: 6/1/2018 0:47
- * @Version: 1.0
- **/
-
 @Component
 public class JsonUtil {
 

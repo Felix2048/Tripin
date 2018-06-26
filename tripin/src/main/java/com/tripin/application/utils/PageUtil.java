@@ -2,14 +2,6 @@ package com.tripin.application.utils;
 
 import java.io.Serializable;
 
-/**
- * Title:  PageUtil
- * Description: 分页系统工具
- *
- * @date: 2017/9/8 下午5:13
- * @author: quinn_norris
- * @version: 1.0
- */
 public class PageUtil implements Serializable {
 
     private static final long serialVersionUID = -3198048449643774660L;

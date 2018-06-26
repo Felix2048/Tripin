@@ -4,14 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Title:  DataUtil
- * Description: 日期格式的转换工具
- *
- * @date: 2017/9/9 下午3:01
- * @author: quinn_norris
- * @version: 1.0
- */
 public class DateUtil {
 
     private static final String lineType = "yyyy-MM-dd HH-mm-ss";

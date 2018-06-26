@@ -17,14 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Title: UserService
- * Description: 业务处理 用户
- *
- * @Author: quanningzhen
- * @Date: 2018/4/15 下午11:26
- * @Version: 1.0
- **/
 
 @Service
 public class UserService extends BaseService {

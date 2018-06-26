@@ -1,13 +1,5 @@
 package com.tripin.application.utils;
 
-/**
- * Title: BaseJson
- * Description: 各层次间传输数据的工具
- *
- * @date: 2017/9/5 下午7:33
- * @author: quinn_norris
- * @version: 1.0
- */
 public class BaseJson {
 
     private String errorCode;
