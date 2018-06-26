@@ -31,11 +31,55 @@ public class Route implements Serializable {
 
     private boolean routeIsChosen;
 
+    private boolean isDelete = false;
+
+    public boolean getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     public Route() {
+    }
+
+    public Route(int planID){
+        this.planID=planID;
+    }
+
+    public Route(int routeID, int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen, boolean isDelete) {
+        this.routeID = routeID;
+        this.planID = planID;
+        this.origin = origin;
+        this.destination = destination;
+        this.routeTransportation = routeTransportation;
+        this.routeTime = routeTime;
+        this.routeIsChosen = routeIsChosen;
+        this.isDelete = isDelete;
     }
 
     public Route(int routeID, int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen) {
         this.routeID = routeID;
+        this.planID = planID;
+        this.origin = origin;
+        this.destination = destination;
+        this.routeTransportation = routeTransportation;
+        this.routeTime = routeTime;
+        this.routeIsChosen = routeIsChosen;
+    }
+
+    public Route(int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen, boolean isDelete) {
+        this.planID = planID;
+        this.origin = origin;
+        this.destination = destination;
+        this.routeTransportation = routeTransportation;
+        this.routeTime = routeTime;
+        this.routeIsChosen = routeIsChosen;
+        this.isDelete = isDelete;
+    }
+
+    public Route(int planID, int origin, int destination, Transportation routeTransportation, int routeTime, boolean routeIsChosen) {
         this.planID = planID;
         this.origin = origin;
         this.destination = destination;
@@ -104,6 +148,14 @@ public class Route implements Serializable {
         this.routeIsChosen = routeIsChosen;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,13 +167,14 @@ public class Route implements Serializable {
                 getDestination() == route.getDestination() &&
                 getRouteTime() == route.getRouteTime() &&
                 isRouteIsChosen() == route.isRouteIsChosen() &&
+                isDelete() == route.isDelete() &&
                 getRouteTransportation() == route.getRouteTransportation();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getRouteID(), getPlanID(), getOrigin(), getDestination(), getRouteTransportation(), getRouteTime(), isRouteIsChosen());
+        return Objects.hash(getRouteID(), getPlanID(), getOrigin(), getDestination(), getRouteTransportation(), getRouteTime(), isRouteIsChosen(), isDelete());
     }
 
     @Override
@@ -134,6 +187,7 @@ public class Route implements Serializable {
                 ", routeTransportation=" + routeTransportation +
                 ", routeTime=" + routeTime +
                 ", routeIsChosen=" + routeIsChosen +
+                ", isDelete=" + isDelete +
                 '}';
     }
 }
