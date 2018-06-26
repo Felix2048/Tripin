@@ -150,7 +150,7 @@ public class Pin implements Serializable {
         return isDelete;
     }
 
-    public void setDelete(boolean delete) {
+    public void setIsDelete(boolean delete) {
         isDelete = delete;
     }
 

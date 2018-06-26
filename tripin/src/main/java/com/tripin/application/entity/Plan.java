@@ -4,7 +4,6 @@ import com.tripin.application.enums.PlanType;
 import com.tripin.application.enums.Transportation;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -27,32 +26,26 @@ public class Plan implements Serializable {
 
     private PlanType planType;
 
-    private Date planCreatedDate;
-
-    private Date planModifiedDate;
-
     private Transportation defaultTransportation;
 
-    private int isDelete = 0;
+    private boolean isDelete = false;
 
-    public int getIsDelete() {
+    public boolean isDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(int isDelete) {
+    public void setIsDelete(boolean isDelete) {
         this.isDelete = isDelete;
     }
 
     public Plan() {
     }
 
-    public Plan(int planID, int mapID, String planName, PlanType planType, Date planCreatedDate, Date planModifiedDate, Transportation defaultTransportation) {
+    public Plan(int planID, int mapID, String planName, PlanType planType, Transportation defaultTransportation) {
         this.planID = planID;
         this.mapID = mapID;
         this.planName = planName;
         this.planType = planType;
-        this.planCreatedDate = planCreatedDate;
-        this.planModifiedDate = planModifiedDate;
         this.defaultTransportation = defaultTransportation;
     }
 
@@ -92,22 +85,6 @@ public class Plan implements Serializable {
         this.planType = planType;
     }
 
-    public Date getPlanCreatedDate() {
-        return planCreatedDate;
-    }
-
-    public void setPlanCreatedDate(Date planCreatedDate) {
-        this.planCreatedDate = planCreatedDate;
-    }
-
-    public Date getPlanModifiedDate() {
-        return planModifiedDate;
-    }
-
-    public void setPlanModifiedDate(Date planModifiedDate) {
-        this.planModifiedDate = planModifiedDate;
-    }
-
     public Transportation getDefaultTransportation() {
         return defaultTransportation;
     }
@@ -121,15 +98,13 @@ public class Plan implements Serializable {
                 getMapID() == that.getMapID() &&
                 Objects.equals(getPlanName(), that.getPlanName()) &&
                 getPlanType() == that.getPlanType() &&
-                Objects.equals(getPlanCreatedDate(), that.getPlanCreatedDate()) &&
-                Objects.equals(getPlanModifiedDate(), that.getPlanModifiedDate()) &&
                 getDefaultTransportation() == that.getDefaultTransportation();
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getPlanID(), getMapID(), getPlanName(), getPlanType(), getPlanCreatedDate(), getPlanModifiedDate(), getDefaultTransportation());
+        return Objects.hash(getPlanID(), getMapID(), getPlanName(), getPlanType(), getDefaultTransportation());
     }
 
     public void setDefaultTransportation(Transportation defaultTransportation) {
@@ -144,8 +119,6 @@ public class Plan implements Serializable {
                 ", mapID=" + mapID +
                 ", planName='" + planName + '\'' +
                 ", planType=" + planType +
-                ", planCreatedDate=" + planCreatedDate +
-                ", planModifiedDate=" + planModifiedDate +
                 ", defaultTransportation=" + defaultTransportation +
                 '}';
     }
