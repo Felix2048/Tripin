@@ -130,7 +130,7 @@ public class PlanPinService extends BaseService {
      * @param pinList
      * @return
      */
-    public BaseJson addPinByUserId(Integer planId, List<Pin> pinList) {
+    public BaseJson addPinsByPlanId(Integer planId, List<Pin> pinList) {
 
         BaseJson baseJson = new BaseJson();
         if (getPlanMsg(planId).getErrorCode().equals("1001"))
@@ -192,11 +192,26 @@ public class PlanPinService extends BaseService {
         BaseJson baseJson = new BaseJson();
         if (getUserMsg(planId).getErrorCode().equals("1001"))
             return baseJson;
-
-        List<Route> routeList = routeMapper.getRoutesByPlanId(planId);
         List<Pin> pinList = pinMapper.getByPlanId(planId);
+        List<Route> routeList = new ArrayList<>();
+        for(int i = 0; i < pinList.size(); i++) {
+            for(int j = 0; j < pinList.size(); j++) {
+                if (i != j) {
+                    Route route = new Route(pinList.get(i).getPinID(), pinList.get(j).getPinID());
+                    Route temp = routeMapper.getRouteByOriginAndDestination(route);
+                    if (null != temp) {
+                        routeList.add(temp);
+                    }
+                    else {
+                        route.setPlanID(planId);
+                        routeMapper.insert(route);
+                        temp = routeMapper.getRouteByOriginAndDestination(route);
+                        routeList.add(temp);
+                    }
+                }
+            }
+        }
         List<Pin> orderedPins = TSPUtil.getOrderedPins(pinList, routeList);
         return baseJson.setObject(orderedPins).setErrorCode("0000");
     }
-
 }

@@ -44,4 +44,9 @@ public class RouteController {
     public BaseJson update(Route route) {
         return platRouteService.updateRoute( route );
     }
+
+    @GetMapping("/query")
+    public BaseJson getRouteByPinBegIdAndPinEndId(Integer origin, Integer dest) {
+        return platRouteService.getRouteByPinBegIdAndPinEndId(origin, dest);
+    }
 }

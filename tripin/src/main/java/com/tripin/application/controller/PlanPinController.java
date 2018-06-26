@@ -34,8 +34,8 @@ public class PlanPinController {
     }
 
     @PostMapping("add/pins")
-    public BaseJson addPinByUserId(@RequestParam Integer planId, List<Pin> pinList) {
-        return planPinService.addPinByUserId( planId, pinList );
+    public BaseJson addPinsByPlanId(@RequestParam Integer planId, List<Pin> pinList) {
+        return planPinService.addPinsByPlanId( planId, pinList );
     }
 
 //    @PostMapping("/delete")
@@ -66,7 +66,7 @@ public class PlanPinController {
     }
 
     @GetMapping("/planedOrderedPin")
-    public BaseJson getPlanedPinOrder(@RequestParam("pinId")Integer pinId) {
-        return planPinService.getPlanedPinOrder(pinId);
+    public BaseJson getPlanedPinOrder(@RequestParam("planID")Integer planID) {
+        return planPinService.getPlanedPinOrder(planID);
     }
 }

@@ -110,11 +110,7 @@ public class PlatRouteService {
     public BaseJson getRoutesByPlanId(Integer planId) {
 
         BaseJson baseJson = new BaseJson();
-
-        Route route = new Route();
-        route.setPlanID(planId);
-
-        List<Route> routes = routeMapper.getRoutesByPlanId(route);
+        List<Route> routes = routeMapper.getRoutesByPlanId(planId);
         return baseJson.setObject(routes).setErrorCode("0000");
     }
 

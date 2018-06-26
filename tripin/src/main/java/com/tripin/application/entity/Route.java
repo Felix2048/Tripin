@@ -50,6 +50,11 @@ public class Route implements Serializable {
         this.planID=planID;
     }
 
+    public Route(int origin, int destination) {
+        this.origin = origin;
+        this.destination = destination;
+    }
+
     public Route(int planID, int origin, int destination, Transportation routeTransportation, int routeTime, double routeDistance, boolean routeIsChosen) {
         this.planID = planID;
         this.origin = origin;
